@@ -1,6 +1,10 @@
-var Search = () => (
+var Search = (props) => (
   <div className="search-bar form-inline">
-    <input className="form-control" type="text" />
+    
+    {console.log(props.searchHandler($('.form-control').text)), 'sdfas'}
+
+    <input className="form-control" type="text" id='form-control' onChange = {props.searchHandler($('.form-control').text)}/>
+    {console.log(document.getElementById('form-control'))}
     <button className="btn hidden-sm-down">
       <span className="glyphicon glyphicon-search"></span>
     </button>

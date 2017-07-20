@@ -16,11 +16,34 @@ class App extends React.Component {
 
   }
 
-  handleSeach (query) {
+  handleSearch (query) {
+    
+    var obj = {
+   
+      key: window.YOUTUBE_API_KEY,
+      query: query,
+      max: 5,
 
-    this.setState({currentVideo: newVideo});
+    };
 
-  } 
+    var results = (data) => {
+
+      this.setState({
+        currentVideo: data.items[0],
+        videos: data.items
+      });
+    };
+
+    // console.log(window.searchYouTube(obj, results), 'search');
+    
+
+  }
+
+  // componentDidMount() {
+  //   searchYouTube(options, callback) {
+       
+  //   }
+  // }
 
   render () {
     return (
@@ -28,12 +51,12 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+
+            <Search searchHandler = {this.handleSearch.bind(this)}/>
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-
             <VideoPlayer video = {this.state.currentVideo}/>
           </div>
           <div className="col-md-5">
