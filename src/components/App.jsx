@@ -4,7 +4,9 @@ class App extends React.Component {
     super(props),
     this.state = {
       currentVideo: null, 
-      videos: []
+      videos: [],
+      details: '',
+      statistics: ''
     };
 
   }
@@ -17,16 +19,23 @@ class App extends React.Component {
 
   handleSearch (query, token) {
     
-    var results = (data) => {
+    var resultsSearch = (data) => {
 
       this.setState({
         currentVideo: data[0],
         videos: data
       });
     };
+    var detailsSearch = (data) => {
+      console.log(data, 'dfs')
+      this.setState({
+        details: data[0],
+        statistics: data
+      });
+    };
     // console.log(, 'obj.queryd');
-    searchYouTube(query, results, token);
-
+    searchYouTube(query, resultsSearch, token);
+    searchDetails(query, detailsSearch);
   }
 
   componentDidMount() {
