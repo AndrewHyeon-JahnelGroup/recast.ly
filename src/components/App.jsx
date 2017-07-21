@@ -1,11 +1,10 @@
 class App extends React.Component {
   
-  constructor() {
-    super(),
+  constructor(props) {
+    super(props),
     this.state = {
-      currentVideo: window.exampleVideoData[0], 
-      videos: window.exampleVideoData
-      
+      currentVideo: null, 
+      videos: []
     };
 
   }
@@ -16,49 +15,50 @@ class App extends React.Component {
 
   }
 
-  handleSearch (query) {
+  handleSearch (query, token) {
     
-    var obj = {
-   
-      key: window.YOUTUBE_API_KEY,
-      query: query,
-      max: 5,
-
-    };
-
     var results = (data) => {
 
       this.setState({
-        currentVideo: data.items[0],
-        videos: data.items
+        currentVideo: data[0],
+        videos: data
       });
     };
-
-    // console.log(window.searchYouTube(obj, results), 'search');
-    
+    // console.log(, 'obj.queryd');
+    searchYouTube(query, results, token);
 
   }
 
-  // componentDidMount() {
-  //   searchYouTube(options, callback) {
-       
-  //   }
-  // }
+  componentDidMount() {
+    searchYouTube('default', (data) => {
 
+      this.setState({
+        currentVideo: data[0],
+        videos: data
+      });
+    
+    });
+       
+    
+  }
+ 
   render () {
     return (
       
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-
+      
             <Search searchHandler = {this.handleSearch.bind(this)}/>
           </div>
         </nav>
-        <div className="row">
+        <div className="video-player">
           <div className="col-md-7">
             <VideoPlayer video = {this.state.currentVideo}/>
           </div>
+        </div>
+        
+        <div className='video-list'>
           <div className="col-md-5">
             <VideoList clickHandeler = {this.handleClick.bind(this)} videos = {this.state.videos}/>
           </div>
@@ -78,14 +78,13 @@ class App extends React.Component {
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
 
+
 ReactDOM.render (
 
   <App />, 
   document.getElementById('app')
 
 );
-
-
 
 
 
